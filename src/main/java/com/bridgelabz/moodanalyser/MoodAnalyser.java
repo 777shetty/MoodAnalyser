@@ -1,23 +1,12 @@
 package com.bridgelabz.moodanalyser;
 
 public class MoodAnalyser{
-	String message;
-	public MoodAnalyser() {
-		this.message ="This is a happy message";
-	}
-	public MoodAnalyser(String message) {
-		this.message = message;
-	}
-	public String analyzeMood() {
-		try {
-			if(message.toLowerCase().contains("sad")) {
-				return "SAD";
-			}
-			return "HAPPY";
+	public String analyzeMood(String message) {
+		if(message.contains("sad")) {
+			return "SAD";
 		}
-		catch (NullPointerException e) {
+		else {
 			return "HAPPY";
 		}
 	}
-	
 }
