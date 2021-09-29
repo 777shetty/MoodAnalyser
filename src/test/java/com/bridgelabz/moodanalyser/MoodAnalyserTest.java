@@ -1,27 +1,53 @@
 package com.bridgelabz.moodanalyser;
-
-import org.hamcrest.CoreMatchers;
-import org.junit.Assert;
 import org.junit.Test;
 
-public class MoodAnalyserTest {
-	@Test
-	public void givenMessage_WhenSad_ShouldReturnSad() throws Exception {
-		MoodAnalyser moodanalyser = new MoodAnalyser("This is a Sad message");
-		String mood = moodanalyser.analyzeMood();
-		Assert.assertThat(mood, CoreMatchers.is("SAD"));
-	}
-	@Test
-	public void givenMessage_WhenHappy_ShouldReturnHappy() throws Exception {
+import org.junit.Assert;
 
-		MoodAnalyser moodanalyser = new MoodAnalyser("This is a Happy message");
-		String mood = moodanalyser.analyzeMood();
-		Assert.assertThat(mood, CoreMatchers.is("HAPPY"));
-	}
-	@Test
-	public void givenMessage_WhenNul_ShouldReturnHapy() {
-		MoodAnalyser moodanalyser = new MoodAnalyser(null);
-		String mood = moodanalyser.analyzeMood();
-		Assert.assertEquals("HAPPY",mood);
-	}
+public class MoodAnalyserTest {
+
+    @Test
+    public void givenMessage_WhenSad_ShouldReturnSad()
+    {
+        MoodAnalyser moodAnalyser = new MoodAnalyser("This is a sad Message");
+        try {
+            String mood = moodAnalyser.analyseMood();
+            Assert.assertEquals("SAD", mood);
+
+        } catch (MoodAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void givenMessage_WhenNoSad_ShouldReturnHappy()
+    {
+        MoodAnalyser moodAnalyser = new MoodAnalyser("I am in Happy Mood");
+
+        try {
+            String mood = moodAnalyser.analyseMood();
+            Assert.assertNotEquals("SAD", mood);
+
+        } catch (MoodAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void givenNullMood_ShouldThrowException(){
+        MoodAnalyser moodAnalyser = new MoodAnalyser(null);
+        try {
+
+            moodAnalyser.analyseMood();
+        } catch (MoodAnalyserException e) {
+            Assert.assertEquals(MoodAnalyserException.ExceptionType.ENTERED_NULL, e.type);
+        }
+    }
+    @Test
+    public void givenEmptyMood_ShouldThrowException(){
+        MoodAnalyser moodAnalyser = new MoodAnalyser("");
+        try {
+
+            moodAnalyser.analyseMood();
+        } catch (MoodAnalyserException e) {
+            Assert.assertEquals(MoodAnalyserException.ExceptionType.ENTERED_EMPTY, e.type);
+        }
+    }
 }
